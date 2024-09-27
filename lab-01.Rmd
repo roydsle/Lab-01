@@ -17,57 +17,45 @@ library(tidyverse)
 # Do not edit this code chunk!
 visitors <- read_csv("data/UK-visitor-numbers.csv")
 ```
-
-
-
 # Wrangling Data
 
 ## Question 1
 
-_How many tourist attractions are there in the data set?_
+How many tourist attractions are there in the data set? There are 348 
 
-```{r Q1}
-visitors %>% count()
-```
+nrow(visitors)
 
 ### Exercise a.
 
 _Create a frequency table of the number of tourist attractions in the data set by `region`._
 
-```{r Ex_a}
-# Delete the comment '#' symbol at the start of the next line and complete the code. 
-
-#visitors %>% count(_____)
-```
+visitors %>% count(admission)
 
 ### Exercise b.
 
 _Create a frequency table by `admission` and `setting`._
 
 ```{r Ex_b}
-# Delete the comment '#' symbol at the start of the next line and complete the code.
 
-#visitors %>% count(_____, _____)
+visitors %>% count(admission, setting)
+ 
 ```
 
 
 ## Question 2
 
 _What are the variable data types?_
-
-```{r Q2_part1}
-class(visitors$n_2022)
-```
+# The dates are numeric, the other variables are characters.
 
 ```{r Q2_part2}
 visitors %>% summarise_all(class)
 ```
 
 
-
 ## Question 3
 
-_Which attraction had the most number of visitors in 2022?_
+_Which attraction had the most number of visitors in 2022?_ 
+# The Crown Estate
 
 ```{r Q3}
 visitors %>% arrange(desc(n_2022))
@@ -77,26 +65,28 @@ visitors %>% arrange(desc(n_2022))
 
 _What are the top 10 most visited attractions in 2021?_
 ```{r Ex_c}
-#visitors %>% 
-#  arrange(____(____)) %>%
-#  head(n = ____)
+visitors %>% 
+  arrange(desc(n_2021)) %>%
+  head(n = 10)
 ```
 
 ## Question 4
 
-_What is the admission charge for the `"National Museum of Scotland"`?_
+_What is the admission charge for the `"National Museum of Scotland"`?_ 
+#. admission is free
 
 ```{r Q4}
 visitors %>% filter(attraction == "National Museum of Scotland")
 ```
 
-
 ### Exercise d.
 
 _Which attraction had exactly 565,772 visitors in 2022?_
+#Knowsley Safari and Knowsley Hall
 
 ```{r Ex_d}
-#visitors %>% filter(___ == ____)
+visitors %>% 
+  filter(n_2022 == "565772")
 ```
 
 ### Exercise e.
@@ -104,14 +94,15 @@ _Which attraction had exactly 565,772 visitors in 2022?_
 _How many attraction had more than 1 million visitors in 2022?_
 
 ```{r Ex_e}
-#visitors %>% 
-#  filter(____) %>%
-#  count()
+visitors %>% 
+  filter(n_2022 > 1000000) %>%
+  count(n_2022, sort = TRUE)
 ```
 
 ## Question 5
 
 _How many `"O"`utside attractions are there in the `"Yorkshire and the Humber"` region that gives `"Members"` free admission, which had more than 100,000 visitors in 2022?_
+3
 
 ```{r Q5}
 visitors %>%
@@ -134,6 +125,12 @@ _How many attractions had between 50,000 and 100,000 visitors in 2022?_
 #    ______,
 #    ______ ) %>%
 #  count()
+
+visitors %>%
+     filter(
+         n_2022 > 50000,
+         n_2022 < 100000) %>%
+     count(n_2022, sort = TRUE)
 ```
 
 ### Exercise g.
